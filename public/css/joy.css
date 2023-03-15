@@ -1,0 +1,8 @@
+.joy_container {
+    border: 1px black solid;
+}
+.joy {
+    border-radius: 50%;
+    background: green;
+    position: relative;
+}

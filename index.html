@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual robofootball field</title>
+    <link rel="stylesheet" href="/public/css/field.css">
+    <link rel="stylesheet" href="/public/css/joy.css">
+    <script src="/node_modules/mqtt/dist/mqtt.min.js"></script>
+    <script src="/public/js/field.js"></script>
+    <script src="/public/js/ball.js"></script>
+    <script src="/public/js/player.js"></script>
+    <script src="/public/js/joy.js"></script>
+</head>
+<body>
+    <div id="field" class="field">
+
+    </div>
+    <div id="joy" style="margin: auto; width: min-content;">
+
+    </div>
+    <script>
+        const field = new Field('#field', 'ws://broker.mqttdashboard.com:8000/mqtt')
+        const ball = new Ball(5)
+        field.add_ball(ball)
+        ball.move(field.width/2, field.height/2)
+        const player1 = new Player('red', 10)
+        const player2 = new Player('blue', 10)
+        field.add_player('p1', player1)
+        field.add_player('p2', player2)
+        let is_mouse_down = false
+
+        const joy = new Joy('#joy')
+        function on_resize() {
+            if (window.innerWidth > window.innerHeight)
+                joy.parent.style.height = `${window.innerHeight / 4}px`
+            else
+                joy.parent.style.height = `${window.innerHeight / 2}px`
+            joy.resize()
+        }
+        on_resize()
+        addEventListener('resize', e => on_resize())
+    </script>
+</body>
+</html>

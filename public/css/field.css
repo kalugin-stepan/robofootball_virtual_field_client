@@ -1,0 +1,36 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.field {
+    width: 25%;
+    aspect-ratio: 4 / 3;
+    border: 1px solid black;
+    border-radius: 1%;
+    margin: 10px auto;
+}
+
+.field * {
+    position: absolute;
+}
+
+.ball {
+    background-color: green;
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
+.player {
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
+.team_red {
+    background-color: red;
+}
+
+.team_blue {
+    background-color: blue;
+}
