@@ -5,8 +5,8 @@
 }
 
 .field {
-    width: 25%;
-    aspect-ratio: 4 / 3;
+    width: 400px;
+    height: 300px;
     border: 1px solid black;
     border-radius: 1%;
     margin: 10px auto;
@@ -21,7 +21,6 @@
     border: 1px solid black;
     border-radius: 50%;
 }
-
 .player {
     border: 1px solid black;
     border-radius: 50%;
@@ -33,4 +32,7 @@
 
 .team_blue {
     background-color: blue;
+}
+.rect {
+    background-color: black;
 }

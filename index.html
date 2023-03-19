@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Virtual robofootball field</title>
     <link rel="stylesheet" href="/public/css/field.css">
     <link rel="stylesheet" href="/public/css/joy.css">
@@ -10,25 +10,61 @@
     <script src="/public/js/field.js"></script>
     <script src="/public/js/ball.js"></script>
     <script src="/public/js/player.js"></script>
+    <script src="/public/js/rect.js"></script>
     <script src="/public/js/joy.js"></script>
+    <style>
+        .scoreboard {
+            display: flex;
+            justify-content: space-between;
+            width: 300px;
+            margin: auto;
+        }
+        #score_1 {
+            color: red;
+        }
+        #score_2 {
+            color: blue;
+        }
+    </style>
 </head>
 <body>
+    <div class="scoreboard">
+        <h1 id="score_1">0</h1>
+        <h1 id="score_2">0</h1>
+    </div>
     <div id="field" class="field">
+
+    </div>
+    <div>
 
     </div>
     <div id="joy" style="margin: auto; width: min-content;">
 
     </div>
     <script>
-        const field = new Field('#field', 'ws://broker.mqttdashboard.com:8000/mqtt')
+        const score_1 = document.getElementById('score_1')
+        const score_2 = document.getElementById('score_2')
+
+        const field = new Field('#field', 'ws://localhost:8000')
         const ball = new Ball(5)
         field.add_ball(ball)
-        ball.move(field.width/2, field.height/2)
         const player1 = new Player('red', 10)
         const player2 = new Player('blue', 10)
         field.add_player('p1', player1)
         field.add_player('p2', player2)
-        let is_mouse_down = false
+        const left_v = new Rect(5, 50)
+        left_v.add_to_field(field.field)
+        left_v.y = 125
+
+        const right_v = new Rect(5, 50)
+        right_v.add_to_field(field.field)
+        right_v.x = 395
+        right_v.y = 125
+
+        field.add_on_score_change_event((score_value_1, score_value_2) => {
+            score_1.innerText = score_value_1.toString()
+            score_2.innerText = score_value_2.toString()
+        })
 
         const joy = new Joy('#joy')
         function on_resize() {
@@ -40,6 +76,11 @@
         }
         on_resize()
         addEventListener('resize', e => on_resize())
+        setInterval(() => {
+            const pos = joy.get_pos(2)
+            console.log(pos)
+            field.client.send(JSON.stringify(pos))
+        }, 100)
     </script>
 </body>
 </html>
