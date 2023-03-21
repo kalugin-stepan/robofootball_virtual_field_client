@@ -81,9 +81,9 @@ def ball_to_center(space, arbiter, data):
 def to_starting_position(space, arbiter, data):
     global score_1, score_2
     if ball.position.x > 200:
-        score_2 += 1
-    else:
         score_1 += 1
+    else:
+        score_2 += 1
     ball_to_center(space, arbiter, data)
     p1.position = 100, 150
     p1.velocity = 0, 0
@@ -219,7 +219,7 @@ async def handle_player(socket, F, taken):
             await asyncio.wait([send_task, recv_task], return_when=asyncio.FIRST_COMPLETED)
             if send_task.done():
                 send_task = asyncio.create_task(socket.send(data))
-                await asyncio.sleep(0.01)
+                await asyncio.sleep(0.03)
             if recv_task.done():
                 direction = json.loads(recv_task.result())
                 F[0] = direction['X']*10000

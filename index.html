@@ -38,14 +38,14 @@
     <div>
 
     </div>
-    <div id="joy" style="margin: auto; width: min-content;">
+    <div id="joy" style="margin: 30px auto; height: 200px; width: min-content; touch-action: none;">
 
     </div>
     <script>
         const score_1 = document.getElementById('score_1')
         const score_2 = document.getElementById('score_2')
 
-        const field = new Field('#field', 'ws://localhost:8000')
+        const field = new Field('#field', 'ws://10.10.29.114:8000')
         const ball = new Ball(5)
         field.add_ball(ball)
         const player1 = new Player('red', 10)
@@ -67,14 +67,7 @@
         })
 
         const joy = new Joy('#joy')
-        function on_resize() {
-            if (window.innerWidth > window.innerHeight)
-                joy.parent.style.height = `${window.innerHeight / 4}px`
-            else
-                joy.parent.style.height = `${window.innerHeight / 2}px`
-            joy.resize()
-        }
-        on_resize()
+        joy.resize()
         addEventListener('resize', e => on_resize())
         setInterval(() => {
             const pos = joy.get_pos(2)
